@@ -1,0 +1,25 @@
+#!/bin/sh
+
+indent() {
+  sed -u 's/^/       /'
+}
+
+echo "-----> Install svm_rank"
+BUILD_DIR=$1
+VENDOR_DIR="vendor"
+DOWNLOAD_URL="http://osmot.cs.cornell.edu/svm_rank/current/svm_rank.tar.gz"
+
+echo "DOWNLOAD_URL = " $DOWNLOAD_URL | indent
+
+cd $BUILD_DIR
+mkdir -p $VENDOR_DIR
+cd $VENDOR_DIR
+mkdir -p svm_rank
+cd svm_rank
+curl -L --silent $DOWNLOAD_URL | tar xz
+make
+
+echo "exporting PATH" | indent
+PROFILE_PATH="$BUILD_DIR/.profile.d/svm_rank.sh"
+mkdir -p $(dirname $PROFILE_PATH)
+echo 'export PATH="$PATH:$HOME/vendor/svm_rank"' >> $PROFILE_PATH

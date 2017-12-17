@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# this pack is valid for all apps
+echo "svm_rank"
+exit 0
